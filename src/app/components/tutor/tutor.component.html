@@ -1,0 +1,53 @@
+<div class="col-md-6 mx-auto table-responsive">
+    <h4 class="text-center">Horario</h4>
+    <span class="badge bg-success">Cursos de hoy</span>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Curso</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Hora</th>
+                <th scope="col">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let curso of listaCurso; index as i" [ngClass]="curso?.fecha | fechaActual">
+                <td>{{ i+1 }}</td>
+                <td>{{ curso.nombre }}</td>
+                <td>{{ curso.fecha | date:'dd/MM/yyyy' }}</td>
+                <td>{{ curso.fecha +" "+ curso.hora | date: 'hh:mm a' }}</td>
+                <td>
+                    <button (click)="crearReporte(curso.idcurso)" type="button" class="btn btn-success"
+                        data-bs-toggle="modal" data-bs-target="#exampleModal">Crear Reporte</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Crear Reporte</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="frmReporte" (ngSubmit)="guardar()" novalidate="novalidate">
+                    <div class="form-floating">
+                        <input type="text" formControlName="nombre" class="form-control" id="nombre"
+                            placeholder="nombre">
+                        <label for="nombre">Curso</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="number" formControlName="asistencia" class="form-control" id="asistencia"
+                            placeholder="asistencia" min="0">
+                        <label for="asistencia">Asistencia</label>
+                    </div>
+                    {{ frmReporte.valid }}
+                    <button class="btn btn-lg btn-primary w-100 mt-4" data-bs-dismiss="modal">Reportar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

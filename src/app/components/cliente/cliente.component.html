@@ -1,0 +1,16 @@
+
+<div class="row m-3">
+    <div class="col-md-4 mb-3 text-center border">
+        <h4>Solicitud de curso</h4>
+        <form [formGroup]="frmcurso" (ngSubmit)="solicitar()" novalidate="novalidate">
+            <div class="form-floating">
+                <input type="text" formControlName="nombre" class="form-control" id="nombre"
+                    placeholder="nombre">
+                <label for="nombre">Nombre</label>
+            </div> 
+            <button class="btn btn-lg btn-primary w-100 mt-2">solicitar</button>
+        </form>
+    </div>
+
+    <app-horario class="col"></app-horario>
+</div>

@@ -1,0 +1,85 @@
+<form [formGroup]="frmReporte" (ngSubmit)="cargarReporte()" class="form m-3">
+  <div class="row g-0">
+    <div class="col-md-2 ms-1">
+      <div class="form-floating">
+        <select class="form-select" formControlName="reporte" id="reporte">
+          <option value="mes" selected>Mes</option>
+          <option value="semana">Semana</option>
+          <option value="dia">Dia</option>
+        </select>
+        <label for="reporte">Selecciona reporte</label>
+      </div>
+    </div>
+    <div class="col-md-2 ms-1">
+      <div class="form-floating" *ngIf="this.frmReporte.value.reporte=='mes'">
+        <input type="month" formControlName="mes" class="form-control" placeholder="reporte" id="mes">
+        <label for="mes">Mes</label>
+      </div>
+      <div class="form-floating" *ngIf="this.frmReporte.value.reporte=='semana'">
+        <input type="week" formControlName="semana" class="form-control" placeholder="reporte" id="semana">
+        <label for="semana">Semana</label>
+      </div>
+
+      <div class="form-floating" *ngIf="this.frmReporte.value.reporte=='dia'">
+        <input type="date" formControlName="dia" class="form-control" placeholder="reporte" id="dia">
+        <label for="dia">Dia</label>
+      </div>
+    </div>
+
+    <div class="col-md-4 ms-1">
+      <div class="form-floating">
+        <select class="form-select" formControlName="idtutor" id="tutor">
+          <option *ngFor="let tutor of listaTutor" [value]="tutor.idtutor">
+            {{ tutor.nombre }}
+          </option>
+        </select>
+        <label for="tutor">Tutor</label>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <button class="btn btn-primary h-100">
+        <i class="bi bi-search"></i>
+      </button>
+      <button (click)="exportAsXLSX()" class="btn btn-success h-100 ms-1">
+        <i class="bi bi-file-excel-fill"></i>
+      </button>
+      <button (click)="exportPDF()" class="btn btn-danger h-100 ms-1">
+        <i class="bi bi-file-pdf-fill"></i>
+      </button>
+    </div>
+  </div>
+</form>
+<hr>
+
+<div class="col-md-8 mx-auto">
+  <div style="position: relative;" id="grafica">
+    <h4 class="text-center">Reporte</h4>
+    <canvas id="myChart"></canvas>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table" id="tablaTutor">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Curso</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Hora</th>
+          <th scope="col">Empresa</th>
+          <th scope="col">Asistencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let curso of listaCurso; index as i" [ngClass]="curso.fecha | fechaActual">
+          <td>{{ i+1 }}</td>
+          <td>{{ curso.curso }}</td>
+          <td>{{ curso.fecha | date:'dd/MM/yyyy' }}</td>
+          <td>{{ curso.fecha +" "+ curso.hora | date: 'hh:mm a' }}</td>
+          <td>{{ curso.empresa }}</td>
+          <td class="text-end">{{ curso.asistencia }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

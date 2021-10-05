@@ -1,0 +1,67 @@
+<div class="col-md-6 my-auto mx-auto text-center">
+
+    <h3 class="text-center">Temas pedidos</h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let curso of listaCurso; index as i">
+                <td>{{ i+1 }}</td>
+                <td>{{ curso.nombre }}</td>
+                <td *ngIf="curso.estado==true">Aceptada</td>
+                <td *ngIf="curso.estado==false">Rechazada</td>
+                <td *ngIf="curso.estado==null">En espera</td>
+                <td *ngIf="curso.estado==null">
+                    <button (click)="cargarCurso(curso.idcurso)" type="button" class="btn btn-success"
+                        data-bs-toggle="modal" data-bs-target="#exampleModal">Aceptar</button>
+                    <button (click)="rechazar(curso.idcurso)" type="button" class="btn btn-danger">Rechazar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Curso</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="frmcurso" (ngSubmit)="actualizarCurso(curso.idcurso)" novalidate="novalidate">
+                    <div class="form-floating">
+                        <input type="text" formControlName="nombre" class="form-control" id="nombre"
+                            placeholder="nombre">
+                        <label for="nombre">Nombre</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="date" formControlName="fecha" class="form-control" id="fecha" placeholder="fecha">
+                        <label for="fecha">Fecha</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="time" formControlName="hora" class="form-control" id="hora" placeholder="hora">
+                        <label for="hora">Hora</label>
+                    </div>
+                    <div class="form-floating">
+                        <select class="form-select" formControlName="idtutor" id="tutor">
+                            <option *ngFor="let tutor of listaTutor" [value]="tutor.idtutor">
+                                {{ tutor.nombre }}
+                            </option>
+                        </select>
+                        <label for="tutor">Selecciona el tipo de cuenta</label>
+                    </div>
+                    <button class="btn btn-lg btn-primary w-100 mt-4" data-bs-dismiss="modal">Crear curso</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
