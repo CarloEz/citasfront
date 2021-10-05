@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import {map} from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 
@@ -9,11 +10,14 @@ export class AuthService {
   private API: string = 'http://localhost:3000';
 
   constructor(private http: HttpClient, private router:Router) {
-    console.log("SERVICE");
   }
 
   postLogin(form: any): any {
-    return this.http.post(`${this.API}/auth/login`, form);
+    return this.http.post(`${this.API}/auth/login`, form)
+    .pipe(map((res:any)=>{
+      localStorage.setItem('type',res.tipo);     
+      return res;
+    }))
   }
 
   postRegistro(form: any): any {
@@ -22,6 +26,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('type');
     this.router.navigate(['/']);
   }
 
@@ -33,8 +38,11 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  getType(){
-    return localStorage.getItem('type');
+  getType(tipo:string){
+    if(localStorage.getItem('type')==tipo){
+      return true;
+    }
+    return false;
   }
 
   cerrarSesion(){

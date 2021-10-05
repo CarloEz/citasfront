@@ -18,4 +18,10 @@ export class NavbarComponent implements OnInit {
     this.authservice.cerrarSesion();
   }
 
+  verRol(tipo:string):boolean{
+    return this.authservice.getType(tipo);
+  }
+
+
+
 }

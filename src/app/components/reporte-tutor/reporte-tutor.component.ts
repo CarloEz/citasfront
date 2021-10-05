@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CursoService } from 'src/app/services/curso.service';
-import { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
-import autoTable  from 'jspdf-autotable';
-
-import Chart from 'chart.js/auto';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CursoService } from 'src/app/services/curso.service';
 import { ArchivoService } from 'src/app/services/archivo.service';
+import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'app-reporte-tutor',
@@ -62,7 +58,6 @@ export class ReporteTutorComponent implements OnInit {
 
     if (this.myChart) {
       this.myChart.data =  {
-        labels:["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"],
         datasets:[data]
       }
       this.myChart.update();
@@ -72,7 +67,6 @@ export class ReporteTutorComponent implements OnInit {
     this.myChart = new Chart(this.ctx, {
       type: 'bar',
       data: {
-        labels:["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"],
         datasets:[data]
       },
       options: {
@@ -95,23 +89,6 @@ export class ReporteTutorComponent implements OnInit {
 
 
   exportPDF(): void {
-    let CHART = document.getElementById('grafica') as HTMLElement;
-    let TABLA= document.getElementById('tablaTutor') as HTMLTableElement;
-    
-    let PDF = new jsPDF('p', 'mm', 'a4');
-
-    html2canvas(CHART).then(canvas => {
-      let fileWidth = 150;
-      let fileHeight = canvas.height * fileWidth / canvas.width;
-
-      const FILEURI = canvas.toDataURL('image/png')
-      
-      let position = 0;
-      PDF.addImage(FILEURI, 'png', 25, position, fileWidth, fileHeight);
-
-      autoTable(PDF,{html:TABLA,startY:fileHeight});
-
-      PDF.save('angular-demo.pdf');
-    });
+    this.archivoservice.exportPDF('reporteTutor');
   }
 }

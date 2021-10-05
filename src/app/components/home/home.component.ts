@@ -15,6 +15,9 @@ export class HomeComponent implements OnInit {
   frmlogin: FormGroup;
 
   constructor(private authservice: AuthService, private router:Router) {
+
+    this.authservice.logout();
+
     this.frmregister = new FormGroup({
       'nombre': new FormControl('', Validators.required),
       'correo': new FormControl('', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]),
@@ -36,7 +39,13 @@ export class HomeComponent implements OnInit {
     this.authservice.postLogin(this.frmlogin.value).subscribe((data: any) => {
       if (data.msg) {
         localStorage.setItem('token', data.msg);
-        this.router.navigate(['/panel']);
+        if(data.tipo=='cliente'){
+          this.router.navigate([`/${data.tipo}/solicitar`]);
+        }
+
+        if(data.tipo=='tutor'){
+          this.router.navigate([`/${data.tipo}/gestion`]);
+        }
       } else {
         console.log("error", data.error);
       }

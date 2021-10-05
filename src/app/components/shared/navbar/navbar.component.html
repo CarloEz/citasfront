@@ -6,17 +6,22 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['admin']" routerLinkActive="active">admin</a>
+                <li class="nav-item" *ngIf="verRol('lider')">
+                    <a class="nav-link" [routerLink]="['cursos']" routerLinkActive="active">Solicitudes</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['tutor']" routerLinkActive="active">tutor</a>
+                <li class="nav-item" *ngIf="verRol('lider')">
+                    <a class="nav-link" [routerLink]="['reportes']" routerLinkActive="active">Reportes</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['cliente']" routerLinkActive="active">cliente</a>
+                <li class="nav-item" *ngIf="verRol('cliente')">
+                    <a class="nav-link" [routerLink]="['solicitar']" routerLinkActive="active">Solicitar</a>
+                </li>
+                <li class="nav-item" *ngIf="verRol('tutor')">
+                    <a class="nav-link" [routerLink]="['gestion']" routerLinkActive="active">Gestionar Reporte</a>
+                </li>
+                <li class="nav-item" *ngIf="verRol('tutor')">
+                    <a class="nav-link" [routerLink]="['reporte']" routerLinkActive="active">Reporte</a>
                 </li>
             </ul>
-
         </div>
         <div class="justify-content-md-end">
             <button class="btn" (click)="salir()">Cerrar Sesion</button>

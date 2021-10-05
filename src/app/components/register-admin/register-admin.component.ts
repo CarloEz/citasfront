@@ -35,8 +35,7 @@ export class RegisterAdminComponent implements OnInit {
     this.authservice.postLogin(this.frmlogin.value).subscribe((data: any) => {
       if (data.msg) {
         localStorage.setItem('token', data.msg);
-        localStorage.setItem('type', data.tipo);
-        this.router.navigate(['/panel']);
+        this.router.navigate([`/${data.tipo}`]);
       } else {
         console.log("error", data.error);
       }
