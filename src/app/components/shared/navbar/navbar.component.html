@@ -21,6 +21,9 @@
                 <li class="nav-item" *ngIf="verRol('tutor')">
                     <a class="nav-link" [routerLink]="['reporte']" routerLinkActive="active">Reporte</a>
                 </li>
+                <li class="nav-item" *ngIf="verRol('participante')">
+                    <a class="nav-link" [routerLink]="['horario']" routerLinkActive="active">Horario</a>
+                </li>
             </ul>
         </div>
         <div class="justify-content-md-end">

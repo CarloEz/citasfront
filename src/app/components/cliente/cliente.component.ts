@@ -28,7 +28,9 @@ export class ClienteComponent implements OnInit {
    console.log( this.frmcurso.value);
 
     this.cursoservice.solicitar(this.frmcurso.value)
-    .subscribe( (res:any) => console.log(res));
+    .subscribe( (res:any) => {
+      this.frmcurso.patchValue({'nombre':''});
+    });
     
   }
 

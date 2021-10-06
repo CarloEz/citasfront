@@ -18,9 +18,9 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'adm', component: RegisterAdminComponent },
   {
-    path: 'cliente', component: ProfileComponent, canActivate: [AuthGuard,EmpresaGuard],
+    path: 'cliente', component: ProfileComponent, canActivate: [AuthGuard, EmpresaGuard],
     children: [
-      { path: 'solicitar', component: ClienteComponent, canActivate:[EmpresaGuard] }
+      { path: 'solicitar', component: ClienteComponent, canActivate: [EmpresaGuard] }
     ]
   },
   {
@@ -31,13 +31,18 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'tutor', component: ProfileComponent, canActivate: [AuthGuard,TutorGuard],
+    path: 'tutor', component: ProfileComponent, canActivate: [AuthGuard, TutorGuard],
     children: [
-      { path: 'gestion', component: TutorComponent, canActivate:[TutorGuard] },
-      { path: 'reporte', component: ReporteTutorComponent, canActivate:[TutorGuard] }
+      { path: 'gestion', component: TutorComponent, canActivate: [TutorGuard] },
+      { path: 'reporte', component: ReporteTutorComponent, canActivate: [TutorGuard] }
     ]
   },
-  { path: 'participante', component: ParticipanteComponent },
+  {
+    path: 'participante', component: ProfileComponent, canActivate: [AuthGuard],
+    children: [
+      { path: 'horario', component: ParticipanteComponent},
+    ]
+  },
   { path: '**', redirectTo: '' }
 ];
 

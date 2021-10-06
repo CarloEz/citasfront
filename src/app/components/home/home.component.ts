@@ -46,6 +46,11 @@ export class HomeComponent implements OnInit {
         if(data.tipo=='tutor'){
           this.router.navigate([`/${data.tipo}/gestion`]);
         }
+
+        if(data.tipo='participante'){
+          this.router.navigate([`/${data.tipo}/horario`]);
+        }
+
       } else {
         console.log("error", data.error);
       }

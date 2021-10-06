@@ -15,7 +15,8 @@ export class AuthService {
   postLogin(form: any): any {
     return this.http.post(`${this.API}/auth/login`, form)
     .pipe(map((res:any)=>{
-      localStorage.setItem('type',res.tipo);     
+      localStorage.setItem('type',res.tipo);    
+      console.log(res.tipo); 
       return res;
     }))
   }
